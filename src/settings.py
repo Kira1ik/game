@@ -1,0 +1,39 @@
+WIDTH = 960
+HEIGHT = 720
+FPS = 60
+
+# Natt-himmel gradient
+NIGHT_TOP = (5, 6, 25)
+NIGHT_BOTTOM = (20, 12, 50)
+
+# Nordlys-palett
+AURORA_GREEN = (80, 255, 170)
+AURORA_TEAL = (60, 220, 210)
+AURORA_PURPLE = (170, 100, 255)
+AURORA_PINK = (255, 100, 200)
+AURORA_BLUE = (100, 200, 255)
+
+# Is
+ICE_BLUE = (150, 220, 255)
+ICE_WHITE = (220, 245, 255)
+
+# Nøytrale
+WHITE = (255, 255, 255)
+GOLD = (255, 220, 100)
+RED = (255, 80, 100)
+TEXT = (235, 235, 250)
+DIM = (140, 140, 170)
+
+# Spillmekanikk
+START_LIVES = 3
+PLAYER_SPEED = 6.5
+PLAYER_RADIUS = 14
+
+# Power-up varigheter (i frames)
+SHIELD_DURATION = FPS * 6
+MAGNET_DURATION = FPS * 7
+SLOWMO_DURATION = FPS * 4
+
+# Combo
+COMBO_TIMEOUT = FPS * 1.5
+COMBO_STEP = 5  # hvert 5. pickups -> +0.5x multiplier
