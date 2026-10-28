@@ -1,7 +1,7 @@
 # Dokumentasjon og Arbeidslogg: Nordlysjeger
 
 **Elev:** Zhanna
-**Fag:** Programmering og spillutvikling
+**Fag:** Yrkesfaglig fordypning vg1
 **Periode:** 3 onsdeger + eget arbeid hjemme
 
 ---
@@ -56,7 +56,7 @@ Spillet fungerte, men det ble litt kjedelig i lengden. Derfor bestemte jeg meg f
 Dette krevde at jeg lagde nedtellings-timere i `Player`-klassen som sier hvor mange frames effekten skal vare (f.eks. 6 sekunder = 360 frames).
 
 **Arbeid hjemme:**
-Jeg innså ganske raskt at 3 økter på skolen ikke var nok for å bli helt ferdig med alt jeg ville. Derfor jobbet jeg en god del med prosjektet hjemme på kveldstid. Det var hjemme jeg fikk tid til å sitte skikkelig med feilsøking og rydde i koden. Jeg flyttet alt av innstillinger (farger, skjermstørrelse, hastigheter) til en egen fil (`settings.py`), og delte opp resten i moduler (som `objects.py` og `player.py`). Dette gjorde filene mye kortere og lettere å lese.
+Jeg innså ganske raskt at 3 dager på skolen ikke var nok for å bli helt ferdig med alt jeg ville. Derfor jobbet jeg en god del med prosjektet hjemme på kveldstid. Det var hjemme jeg fikk tid til å sitte skikkelig med feilsøking og rydde i koden. Jeg flyttet alt av innstillinger (farger, skjermstørrelse, hastigheter) til en egen fil (`settings.py`), og delte opp resten i moduler (som `objects.py` og `player.py`). Dette gjorde filene mye kortere og lettere å lese.
 
 Til slutt la jeg til et Start-meny og en Pause-funksjon (ved å trykke P), slik at spillet føles mer komplett. Å jobbe hjemme gjorde at jeg fikk brukt mye mer tid på detaljer, som glødeeffekter og hvordan menyen skulle se ut.
 
