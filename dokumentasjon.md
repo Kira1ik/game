@@ -6,7 +6,7 @@
 
 ---
 
-## onsdag 14 : Planlegging og oppsett
+## onsdag 14. oktober  : Planlegging og oppsett
 
 **Mål for økten:** Bestemme ideen, velge verktøy og få et grunnleggende vindu på skjermen.
 
@@ -22,7 +22,7 @@ Da jeg skulle installere Pygame, fikk jeg en stor feilmelding i terminalen. Det 
 
 ---
 
-## osdag 21: Utvikling av kjernefunksjonalitet
+## osdag 21. oktober: Utvikling av kjernefunksjonalitet
 
 **Mål for økten:** Få spilleren til å bevege seg, få objekter til å falle, og få kollisjoner til å fungere.
 
@@ -42,7 +42,7 @@ Mot slutten av økten la jeg til en Highscore-funksjon som lagrer poengsummen ti
 
 ---
 
-## onsdag 28: Polering, feilsøking og eget arbeid hjemme
+## onsdag 28. oktober: Polering, feilsøking og eget arbeid hjemme
 
 **Mål for økten:** Gjøre spillet morsommere med power-ups, legge til menyer og finpusse koden.
 
@@ -70,7 +70,7 @@ For å få til dette prosjektet har jeg brukt flere typer ressurser aktivt.
 Siden jeg aldri hadde laget et Pygame-spill før, brukte jeg mye YouTube. Jeg så videoer fra kanaler som _freeCodeCamp_ og _Tech With Tim_. Jeg så spesielt på videoer som forklarte hvordan man setter opp en spill-løkke, hvordan man bruker klasser i Python, og hvordan man håndterer kollisjoner og input. Tutorialsene ga meg en grunnmur, men jeg måtte tilpasse alt til mitt eget spill.
 
 **Bruk av KI:**
-Jeg skrev og testet absolutt all kode selv, men jeg brukte KI (som Microsoft Copilot) som en _hjelpelærer_ når jeg sto fast. Jeg brukte det aldri til å generere hele spillet, men heller til å forstå feilmeldinger og finne riktig tilnærming.
+Jeg skrev og testet mesteparten av kode selv, men jeg brukte KI (som Microsoft Copilot) som en _hjelpelærer_ når jeg sto fast. Jeg brukte det aldri til å generere hele spillet, men heller til å forstå feilmeldinger og finne riktig tilnærming.
 
 _Eksempler på hva jeg spurte KI om:_
 
