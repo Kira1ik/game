@@ -4,11 +4,11 @@ Et 2D-arkadespill laget med Python og Pygame. Målet er å samle nordlys-partikl
 
 ## Skjermbilder
 
-![meny](image\image.png)
+![Meny](image/image.png)
 
-![spill](image\image-1.png)
+![Spill](image/image-1.png)
 
-![game over](image\image-2.png)
+![Game over](image/image-2.png)
 
 ## Hvordan starte spillet
 
