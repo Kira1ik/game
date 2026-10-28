@@ -58,42 +58,20 @@ class Player:
         return self.magnet_timer > 0
 
     def draw(self, screen):
-        for p in self.trail:
-            p.draw(screen)
+        # Tegn halen først, slik at den ligger bak spilleren.
+        for particle in self.trail:
+            particle.draw(screen)
 
-        base_r = self.radius + math.sin(self.pulse) * 2
-        cx = cy = int(base_r * 4)
-        size = int(base_r * 8)
-        glow = pygame.Surface((size, size), pygame.SRCALPHA)
-        for i in range(8, 0, -1):
-            pygame.draw.circle(glow, (*AURORA_GREEN, 10), (cx, cy),
-                               int(base_r + i * 4))
-        screen.blit(glow, (self.x - cx, self.y - cy))
+        x, y = int(self.x), int(self.y)
+        radius = int(self.radius + math.sin(self.pulse) * 2)
 
-        # Roterende partikler rundt spilleren
-        for i in range(6):
-            ang = math.radians(self.rotation + i * 60)
-            px = self.x + math.cos(ang) * (base_r + 10)
-            py = self.y + math.sin(ang) * (base_r + 10)
-            pygame.draw.circle(screen, AURORA_PURPLE, (int(px), int(py)), 2)
+        # Enkle ringer gjør spilleren synlig mot den mørke bakgrunnen.
+        pygame.draw.circle(screen, AURORA_PURPLE, (x, y), radius + 5, 2)
+        pygame.draw.circle(screen, AURORA_GREEN, (x, y), radius)
+        pygame.draw.circle(screen, WHITE, (x, y), max(2, radius - 6))
 
-        pygame.draw.circle(screen, WHITE, (int(self.x), int(self.y)), int(base_r))
-        pygame.draw.circle(screen, AURORA_GREEN, (int(self.x), int(self.y)),
-                           int(base_r - 3))
-        pygame.draw.circle(screen, WHITE, (int(self.x), int(self.y)),
-                           int(base_r - 7))
+        if self.has_shield():
+            pygame.draw.circle(screen, AURORA_BLUE, (x, y), radius + 12, 2)
 
-        if self.shield_timer > 0:
-            alpha = 100 + int(80 * math.sin(self.pulse * 2))
-            s = pygame.Surface((self.radius * 6, self.radius * 6), pygame.SRCALPHA)
-            pygame.draw.circle(s, (*AURORA_BLUE, alpha),
-                               (self.radius * 3, self.radius * 3),
-                               int(self.radius + 14), 3)
-            screen.blit(s, (self.x - self.radius * 3, self.y - self.radius * 3))
-
-        if self.magnet_timer > 0:
-            alpha = 60 + int(40 * math.sin(self.pulse * 3))
-            s = pygame.Surface((200, 200), pygame.SRCALPHA)
-            pygame.draw.circle(s, (*GOLD, alpha), (100, 100), 90, 2)
-            pygame.draw.circle(s, (*GOLD, alpha // 2), (100, 100), 70, 1)
-            screen.blit(s, (self.x - 100, self.y - 100))
+        if self.has_magnet():
+            pygame.draw.circle(screen, GOLD, (x, y), 90, 1)

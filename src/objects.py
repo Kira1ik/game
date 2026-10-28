@@ -30,22 +30,11 @@ class AuroraParticle:
         return self.y > HEIGHT + self.radius
 
     def draw(self, screen):
-        r = self.radius + math.sin(self.phase) * 1.5
-        cx = cy = int(r * 4)
-        size = int(r * 8)
-        glow = pygame.Surface((size, size), pygame.SRCALPHA)
-        for i in range(5, 0, -1):
-            pygame.draw.circle(glow, (*self.color, 16), (cx, cy), int(r + i * 3))
-        screen.blit(glow, (self.x - cx, self.y - cy))
+        r = int(self.radius + math.sin(self.phase) * 1.5)
+        x, y = int(self.x), int(self.y)
+        pygame.draw.circle(screen, self.color, (x, y), r)
+        pygame.draw.circle(screen, WHITE, (x, y), max(2, r // 2))
 
-        for i in range(4):
-            ang = math.radians(self.rotation + i * 90)
-            px = self.x + math.cos(ang) * (r + 6)
-            py = self.y + math.sin(ang) * (r + 6)
-            pygame.draw.circle(screen, WHITE, (int(px), int(py)), 1)
-
-        pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), int(r))
-        pygame.draw.circle(screen, WHITE, (int(self.x), int(self.y)), int(r * 0.5))
 
 
 class IceShard:
@@ -72,26 +61,16 @@ class IceShard:
         return self.y > HEIGHT + self.size
 
     def draw(self, screen):
-        cx = cy = self.size * 3
-        glow = pygame.Surface((self.size * 6, self.size * 6), pygame.SRCALPHA)
-        pygame.draw.circle(glow, (*ICE_BLUE, 30), (cx, cy), self.size + 6)
-        screen.blit(glow, (self.x - cx, self.y - cy))
-
-        pts = []
+        # Iskrystallen er en roterende sekskant med spisse hjørner.
+        points = []
         for i in range(6):
-            ang = math.radians(self.rotation + i * 60)
-            r = self.size if i % 2 == 0 else self.size * 0.6
-            pts.append((int(self.x + math.cos(ang) * r),
-                        int(self.y + math.sin(ang) * r)))
-        pygame.draw.polygon(screen, ICE_BLUE, pts)
-        pygame.draw.polygon(screen, ICE_WHITE, pts, 2)
-        pygame.draw.circle(screen, WHITE,
-                           (int(self.x), int(self.y)), max(2, self.size // 5))
+            angle = math.radians(self.rotation + i * 60)
+            radius = self.size if i % 2 == 0 else self.size * 0.6
+            px = int(self.x + math.cos(angle) * radius)
+            py = int(self.y + math.sin(angle) * radius)
+            points.append((px, py))
 
-        for i in range(3):
-            ang = math.radians(self.rotation + i * 60)
-            x1 = self.x + math.cos(ang) * self.size
-            y1 = self.y + math.sin(ang) * self.size
-            x2 = self.x - math.cos(ang) * self.size
-            y2 = self.y - math.sin(ang) * self.size
-            pygame.draw.line(screen, ICE_WHITE, (x1, y1), (x2, y2), 1)
+        pygame.draw.polygon(screen, ICE_BLUE, points)
+        pygame.draw.polygon(screen, ICE_WHITE, points, 2)
+        pygame.draw.circle(screen, WHITE, (int(self.x), int(self.y)),
+                           max(2, self.size // 5))

@@ -5,9 +5,6 @@ import pygame
 
 
 class Particle:
-    __slots__ = ("x", "y", "vx", "vy", "color", "life", "max_life",
-                 "size", "gravity", "fade")
-
     def __init__(self, x, y, vx, vy, color, life, size,
                  gravity=0.0, fade=True):
         self.x, self.y = x, y
@@ -31,14 +28,11 @@ class Particle:
         return self.life <= 0
 
     def draw(self, surf):
-        t = max(0.0, self.life / self.max_life)
-        r = max(1, int(self.size * t))
-        alpha = int(255 * t) if self.fade else 255
-        if r < 2 or alpha < 8:
-            return
-        tmp = pygame.Surface((r * 2, r * 2), pygame.SRCALPHA)
-        pygame.draw.circle(tmp, (*self.color[:3], alpha), (r, r), r)
-        surf.blit(tmp, (self.x - r, self.y - r))
+        # Partiklene blir mindre når levetiden går mot null.
+        ratio = self.life / self.max_life
+        radius = max(1, int(self.size * ratio))
+        pygame.draw.circle(surf, self.color, (int(self.x), int(self.y)), radius)
+
 
 
 class Burst:

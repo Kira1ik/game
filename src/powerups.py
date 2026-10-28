@@ -31,32 +31,23 @@ class PowerUp:
         return self.y > HEIGHT + self.size
 
     def draw(self, screen):
-        cx = cy = self.size * 3
-        glow = pygame.Surface((self.size * 6, self.size * 6), pygame.SRCALPHA)
-        for i in range(4, 0, -1):
-            pygame.draw.circle(glow, (*self.color, 22), (cx, cy),
-                               self.size + i * 3)
-        screen.blit(glow, (self.x - cx, self.y - cy))
-
-        pts = []
+        # Power-ups vises som roterende firkanter med ulikt symbol.
+        points = []
         for i in range(4):
-            ang = math.radians(self.rotation + i * 90)
-            pts.append((int(self.x + math.cos(ang) * self.size),
-                        int(self.y + math.sin(ang) * self.size)))
-        pygame.draw.polygon(screen, self.color, pts)
-        pygame.draw.polygon(screen, WHITE, pts, 2)
+            angle = math.radians(self.rotation + i * 90)
+            px = int(self.x + math.cos(angle) * self.size)
+            py = int(self.y + math.sin(angle) * self.size)
+            points.append((px, py))
 
+        pygame.draw.polygon(screen, self.color, points)
+        pygame.draw.polygon(screen, WHITE, points, 2)
+
+        x, y = int(self.x), int(self.y)
         if self.kind == "shield":
-            pygame.draw.circle(screen, WHITE,
-                               (int(self.x), int(self.y)), self.size // 2, 2)
+            pygame.draw.circle(screen, WHITE, (x, y), self.size // 2, 2)
         elif self.kind == "magnet":
-            pygame.draw.line(screen, WHITE, (self.x - 4, self.y),
-                             (self.x + 4, self.y), 2)
-            pygame.draw.line(screen, WHITE, (self.x, self.y - 4),
-                             (self.x, self.y + 4), 2)
-        else:  # slow
-            pygame.draw.polygon(screen, WHITE, [
-                (int(self.x), int(self.y) - 5),
-                (int(self.x + 4), int(self.y + 3)),
-                (int(self.x - 4), int(self.y + 3)),
-            ])
+            pygame.draw.line(screen, WHITE, (x - 4, y), (x + 4, y), 2)
+            pygame.draw.line(screen, WHITE, (x, y - 4), (x, y + 4), 2)
+        else:
+            pygame.draw.polygon(screen, WHITE, [(x, y - 5), (x + 4, y + 3),
+                                                (x - 4, y + 3)])
