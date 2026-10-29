@@ -34,24 +34,24 @@ Du trenger **Python 3.10 eller nyere**.
 
 ## Slik spiller du
 
-| Tast | Handling |
-| --- | --- |
-| Piltaster eller **W A S D** | Beveg spilleren |
-| **ENTER** eller **SPACE** | Start spillet (i menyen) |
-| **P** eller **ESC** | Pause / fortsett |
-| **Q** (i pausemenyen) | Tilbake til startmenyen |
-| **ENTER** (etter game over) | Spill igjen |
-| **ESC** (etter game over) | Tilbake til menyen |
+| Tast                        | Handling                 |
+| --------------------------- | ------------------------ |
+| Piltaster eller **W A S D** | Beveg spilleren          |
+| **ENTER** eller **SPACE**   | Start spillet (i menyen) |
+| **P** eller **ESC**         | Pause / fortsett         |
+| **Q** (i pausemenyen)       | Tilbake til startmenyen  |
+| **ENTER** (etter game over) | Spill igjen              |
+| **ESC** (etter game over)   | Tilbake til menyen       |
 
 ## Power-ups
 
 Av og til faller det ned en roterende firkant. Plukk den opp for en midlertidig effekt:
 
-| Power-up | Symbol | Effekt | Varighet |
-| --- | --- | --- | --- |
-| **Skjold** | Ring | Iskrystaller ødelegges uten at du mister liv | 6 sekunder |
-| **Magnet** | Pluss | Nordlys-partikler i nærheten trekkes mot deg | 7 sekunder |
-| **Slow-motion** | Trekant | Nye objekter faller saktere | 4 sekunder |
+| Power-up        | Symbol  | Effekt                                       | Varighet   |
+| --------------- | ------- | -------------------------------------------- | ---------- |
+| **Skjold**      | Ring    | Iskrystaller ødelegges uten at du mister liv | 6 sekunder |
+| **Magnet**      | Pluss   | Nordlys-partikler i nærheten trekkes mot deg | 7 sekunder |
+| **Slow-motion** | Trekant | Nye objekter faller saktere                  | 4 sekunder |
 
 Aktive power-ups vises som små sirkler med nedtelling nede til venstre på skjermen.
 
@@ -60,5 +60,3 @@ Aktive power-ups vises som små sirkler med nedtelling nede til venstre på skje
 - Hver partikkel gir 10 poeng ganger combo-multiplikatoren.
 - Combo øker for hver partikkel du fanger innen 1,5 sekund etter forrige. For hver 5. partikkel i rekke øker multiplikatoren med 0,5x.
 - Combo nullstilles hvis du ikke fanger noe på 1,5 sekund, eller hvis du blir truffet av is.
-
-
