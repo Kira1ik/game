@@ -15,41 +15,31 @@ class Audio:
         except Exception:
             self.enabled = False
 
-    def _tone(self, freq, duration, volume=0.25):
-        sr = 44100
-        n = int(sr * duration)
-        buf = array.array("h")
-        for i in range(n):
-            env = max(0.0, 1.0 - i / n)
-            v = int(volume * 32767 * env * math.sin(2 * math.pi * freq * i / sr))
-            buf.append(v)
-            buf.append(v)
-        return pygame.mixer.Sound(buffer=buf.tobytes())
+    def _make_sound(self, freq_start, freq_end, duration, volume):
 
-    def _sweep(self, f1, f2, duration, volume=0.25):
-        sr = 44100
-        n = int(sr * duration)
-        buf = array.array("h")
+        sample_rate = 44100
+        n = int(sample_rate * duration)
+        data = array.array("h")
         phase = 0.0
         for i in range(n):
-            t = i / n
-            f = f1 + (f2 - f1) * t
-            phase += 2 * math.pi * f / sr
-            env = max(0.0, 1.0 - t)
-            v = int(volume * 32767 * env * math.sin(phase))
-            buf.append(v)
-            buf.append(v)
-        return pygame.mixer.Sound(buffer=buf.tobytes())
+            t = i / n                                        
+            freq = freq_start + (freq_end - freq_start) * t   
+            phase += 2 * math.pi * freq / sample_rate
+            fade = 1.0 - t                                   
+            value = int(volume * 32767 * fade * math.sin(phase))
+            data.append(value)  
+            data.append(value)  
+        return pygame.mixer.Sound(buffer=data.tobytes())
 
     def _build(self):
         self.sounds = {
-            "pickup":   self._tone(880, 0.08, 0.18),
-            "hit":      self._sweep(280, 80, 0.25, 0.35),
-            "levelup":  self._sweep(440, 880, 0.35, 0.22),
-            "gameover": self._sweep(330, 110, 0.8, 0.30),
-            "powerup":  self._tone(660, 0.12, 0.22),
-            "shield":   self._tone(520, 0.10, 0.20),
-            "start":    self._sweep(220, 660, 0.25, 0.22),
+            "pickup":   self._make_sound(880, 880, 0.08, 0.18),
+            "hit":      self._make_sound(280, 80, 0.25, 0.35),
+            "levelup":  self._make_sound(440, 880, 0.35, 0.22),
+            "gameover": self._make_sound(330, 110, 0.8, 0.30),
+            "powerup":  self._make_sound(660, 660, 0.12, 0.22),
+            "shield":   self._make_sound(520, 520, 0.10, 0.20),
+            "start":    self._make_sound(220, 660, 0.25, 0.22),
         }
 
     def play(self, name):

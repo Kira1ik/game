@@ -31,7 +31,6 @@ class PowerUp:
         return self.y > HEIGHT + self.size
 
     def draw(self, screen):
-        # Power-ups vises som roterende firkanter med ulikt symbol.
         points = []
         for i in range(4):
             angle = math.radians(self.rotation + i * 90)

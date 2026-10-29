@@ -37,7 +37,6 @@ class Game:
         self._build_background()
         self._init_game_objects()
 
-    # ---------- Setup ----------
     def _build_starfield(self):
         self.star_layers = []
         for n, spd, rad in ((80, 0.2, 1), (60, 0.5, 2), (40, 0.9, 2)):
@@ -84,7 +83,6 @@ class Game:
         self.combo_timer = 0
         self.slow_timer = 0
 
-    # ---------- Persistence ----------
     def load_high_score(self):
         try:
             with open("highscore.txt", "r") as f:
@@ -99,7 +97,6 @@ class Game:
         except Exception:
             pass
 
-    # ---------- Effects ----------
     def trigger_shake(self, amount):
         self.shake = max(self.shake, amount)
 
@@ -107,7 +104,6 @@ class Game:
         self.flash = (color, alpha)
         self.flash_timer = duration
 
-    # ---------- State transitions ----------
     def start_new_game(self):
         self._init_game_objects()
         self.state = "playing"
@@ -121,7 +117,6 @@ class Game:
             self.high_score = self.score
             self.save_high_score()
 
-    # ---------- Events ----------
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -150,7 +145,6 @@ class Game:
                 elif event.key == pygame.K_ESCAPE:
                     self.state = "menu"
 
-    # ---------- Update ----------
     def _update_background(self):
         for layer in self.star_layers:
             for s in layer:
@@ -185,13 +179,11 @@ class Game:
         keys = pygame.key.get_pressed()
         self.player.update(keys)
 
-        # Combo decay
         if self.combo_timer > 0:
             self.combo_timer -= 1
             if self.combo_timer <= 0:
                 self.combo = 0
 
-        # Level-up
         self.level_timer += 1
         if self.level_timer >= FPS * 20:
             self.level += 1
@@ -211,7 +203,6 @@ class Game:
 
         speed_mult = (1 + (self.level - 1) * 0.1) * time_scale
 
-        # Spawning
         self.spawn_timer += 1
         if self.spawn_timer >= max(18, 48 - self.level * 3):
             self.spawn_timer = 0
@@ -227,7 +218,6 @@ class Game:
             self.powerup_spawn_timer = 0
             self.powerups.append(PowerUp(speed_mult))
 
-        # Magnet effect
         if self.player.has_magnet():
             for p in self.particles:
                 dx = self.player.x - p.x
@@ -237,7 +227,6 @@ class Game:
                     p.x += (dx / d) * 3
                     p.y += (dy / d) * 3
 
-        # Particles pickups
         for p in self.particles[:]:
             p.update()
             if p.off_screen():
@@ -255,7 +244,6 @@ class Game:
                 self.audio.play("pickup")
                 self.trigger_flash(p.color, 6, 30)
 
-        # Shards collisions
         for s in self.shards[:]:
             s.update()
             if s.off_screen():
@@ -281,7 +269,6 @@ class Game:
                         self.game_over()
                         return
 
-        # Powerups
         for pu in self.powerups[:]:
             pu.update()
             if pu.off_screen():
@@ -292,7 +279,6 @@ class Game:
                 self.bursts.append(Burst(pu.x, pu.y, pu.color, 18, 5, 32, 3))
                 self.audio.play("powerup")
 
-        # Update effects
         for b in self.bursts:
             b.update()
         self.bursts = [b for b in self.bursts if not b.dead()]
@@ -300,7 +286,6 @@ class Game:
             t.update()
         self.texts = [t for t in self.texts if not t.dead()]
 
-        # Smooth score
         if self.display_score < self.score:
             self.display_score = min(
                 self.score,
@@ -319,7 +304,6 @@ class Game:
         self.texts.append(FloatingText(self.player.x, self.player.y - 40,
                                        label, col, 60))
 
-    # ---------- Drawing ----------
     def _draw_background(self, surf):
         surf.blit(self.bg, (0, 0))
 
@@ -345,14 +329,11 @@ class Game:
         surf.blit(self.mountain, (0, HEIGHT - 180))
 
     def _draw_heart(self, surf, x, y, size, color):
-        pts = []
-        for i in range(24):
-            t = i / 24 * math.tau
-            hx = 16 * math.sin(t) ** 3
-            hy = -(13 * math.cos(t) - 5 * math.cos(2 * t)
-                   - 2 * math.cos(3 * t) - math.cos(4 * t))
-            pts.append((x + hx * size / 16, y + hy * size / 16))
-        pygame.draw.polygon(surf, color, pts)
+        r = size // 2 + 1
+        pygame.draw.circle(surf, color, (x - r, y - 3), r)
+        pygame.draw.circle(surf, color, (x + r, y - 3), r)
+        pygame.draw.polygon(surf, color,
+                            [(x - 2 * r, y - 1), (x + 2 * r, y - 1), (x, y + size)])
 
     def _draw_timer_icon(self, surf, x, y, color, letter, timer, max_timer):
         pygame.draw.circle(surf, (0, 0, 0, 120), (x, y), 20)
@@ -369,31 +350,25 @@ class Game:
         panel.fill((0, 0, 0, 90))
         surf.blit(panel, (0, 0))
 
-        # Score
         score_surf = self.font_mid.render(str(self.display_score), True, WHITE)
         surf.blit(score_surf, (24, 14))
         surf.blit(self.font_small.render("POENG", True, DIM), (24, 44))
 
-        # Level
         lvl = self.font_mid.render(f"NIVÅ {self.level}", True, AURORA_PURPLE)
         surf.blit(lvl, (WIDTH // 2 - lvl.get_width() // 2, 14))
 
-        # Combo
         if self.combo >= COMBO_STEP:
             mult = 1 + (self.combo // COMBO_STEP) * 0.5
             cs = self.font_small.render(
                 f"COMBO x{mult:.1f}  ({self.combo})", True, GOLD)
             surf.blit(cs, (WIDTH // 2 - cs.get_width() // 2, 44))
 
-        # Lives
         for i in range(self.lives):
             self._draw_heart(surf, WIDTH - 40 - i * 34, 30, 12, RED)
 
-        # High score
         hs = self.font_small.render(f"REKORD {self.high_score}", True, GOLD)
         surf.blit(hs, (WIDTH - hs.get_width() - 20, 46))
 
-        # Power-up timers
         px, py = 20, HEIGHT - 40
         if self.player.has_shield():
             self._draw_timer_icon(surf, px, py, AURORA_BLUE, "S",
@@ -407,7 +382,6 @@ class Game:
             self._draw_timer_icon(surf, px, py, AURORA_PURPLE, "T",
                                   self.slow_timer, SLOWMO_DURATION)
 
-        # Level banner
         if self.level_banner_timer > 0:
             t = self.level_banner_timer / 120
             alpha = int(255 * min(1, t * 2) * min(1, (1 - t) * 4))
@@ -422,24 +396,18 @@ class Game:
             overlay.fill((*color, alpha))
             surf.blit(overlay, (0, 0))
 
-    # ---------- Screens ----------
     def _draw_menu(self, surf):
         self._draw_background(surf)
 
-        scale = 1 + math.sin(self.menu_time * 2) * 0.03
         title = self.font_huge.render("NORDLYSJEGER", True, AURORA_GREEN)
         glow = self.font_huge.render("NORDLYSJEGER", True, AURORA_PURPLE)
-        rot = math.sin(self.menu_time) * 1.5
-        title = pygame.transform.rotozoom(title, rot, scale)
-        glow = pygame.transform.rotozoom(glow, rot, scale)
         rect = title.get_rect(center=(WIDTH // 2, 160))
-        surf.blit(glow, (rect.x + 3, rect.y + 3))
+        surf.blit(glow, (rect.x + 3, rect.y + 3)) 
         surf.blit(title, rect)
 
         sub = self.font_mid.render("Jakt på nordlyset", True, TEXT)
         surf.blit(sub, (WIDTH // 2 - sub.get_width() // 2, 230))
 
-        # Floating demo-particles
         for i in range(3):
             x = WIDTH // 2 + math.sin(self.menu_time + i * 2) * 200
             y = 320 + math.sin(self.menu_time * 1.5 + i) * 30 + i * 20
@@ -498,7 +466,6 @@ class Game:
             "ENTER = spill igjen     ESC = meny", True, TEXT)
         surf.blit(info, (WIDTH // 2 - info.get_width() // 2, 470))
 
-    # ---------- Main draw ----------
     def draw(self):
         if self.state == "menu":
             self._draw_menu(self.screen)
@@ -537,7 +504,6 @@ class Game:
         self._draw_flash(self.screen)
         pygame.display.flip()
 
-    # ---------- Loop ----------
     def run(self):
         while True:
             self.clock.tick(FPS)

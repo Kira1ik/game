@@ -28,7 +28,6 @@ class Particle:
         return self.life <= 0
 
     def draw(self, surf):
-        # Partiklene blir mindre når levetiden går mot null.
         ratio = self.life / self.max_life
         radius = max(1, int(self.size * ratio))
         pygame.draw.circle(surf, self.color, (int(self.x), int(self.y)), radius)
