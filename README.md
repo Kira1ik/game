@@ -6,15 +6,9 @@ Et 2D-arkadespill laget med Python og Pygame-CE. Du styrer en lysende nordlys-å
 
 **Startmeny**
 
-![Meny](image/image.png)
-
-**Spillet**
-
-![Spill](image/image-1.png)
-
-**Game over**
-
-![Game over](image/image-2.png)
+| Startmeny                | Spillet                     | Game over                       |
+| ------------------------ | --------------------------- | ------------------------------- |
+| ![Meny](image/image.png) | ![Spill](image/image-1.png) | ![Game over](image/image-2.png) |
 
 ## Hva går spillet ut på?
 
