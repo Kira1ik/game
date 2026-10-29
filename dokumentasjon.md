@@ -11,29 +11,34 @@
 ## 1. Idé og planlegging
 
 ### Hva handler spillet om?
+
 Nordlysjeger er et 2D-arkadespill der spilleren styrer en lysende nordlys-ånd over en mørk stjernehimmel. Jeg ville lage noe med et tydelig norsk preg. Valget falt på nordlys, fordi det er visuelt kult og lar meg bruke mørke farger med sterke neon-aksenter (grønn, blå, lilla).
 
 ### Hvem er målgruppen?
+
 Spillet er for ungdom og voksne som liker enkle arkadespill de kan spille i korte økter. Reglene forklares på startskjermen, og kontrollene er enkle (piltaster eller WASD), så alle kan komme i gang med en gang.
 
 ### Hva er målet i spillet?
+
 Spilleren skal bevege seg fritt, samle nordlys-partikler for poeng og unngå iskrystaller som faller ned. Spilleren har 3 liv, og farten øker over tid for å gjøre spillet vanskeligere. Målet er å slå sin egen rekord.
 
 ### Hvilke mekanikker er med?
-| Mekanikk | Beskrivelse |
-| --- | --- |
-| Bevegelse | Piltaster eller WASD, med normalisert diagonal fart |
+
+| Mekanikk    | Beskrivelse                                                   |
+| ----------- | ------------------------------------------------------------- |
+| Bevegelse   | Piltaster eller WASD, med normalisert diagonal fart           |
 | Poengsystem | 10 poeng per nordlys-partikkel, ganger en combo-multiplikator |
-| Liv | 3 liv, vises som hjerter øverst til høyre |
-| Kollisjoner | Mellom spilleren og partikler, iskrystaller og power-ups |
-| Nivåer | Nytt nivå hvert 20. sekund, med raskere og hyppigere objekter |
-| Power-ups | Skjold, magnet og slow-motion |
-| Tidtaking | Timere for spawning, combo, nivå og power-ups |
-| Menyer | Startmeny, pausemeny og game over-skjerm |
-| Rekord | Highscore lagres i `highscore.txt` |
-| Lyd | Lydeffekter som lages i koden |
+| Liv         | 3 liv, vises som hjerter øverst til høyre                     |
+| Kollisjoner | Mellom spilleren og partikler, iskrystaller og power-ups      |
+| Nivåer      | Nytt nivå hvert 20. sekund, med raskere og hyppigere objekter |
+| Power-ups   | Skjold, magnet og slow-motion                                 |
+| Tidtaking   | Timere for spawning, combo, nivå og power-ups                 |
+| Menyer      | Startmeny, pausemeny og game over-skjerm                      |
+| Rekord      | Highscore lagres i `highscore.txt`                            |
+| Lyd         | Lydeffekter som lages i koden                                 |
 
 ### Hvordan skal spillet se ut?
+
 Mørk nattehimmel med gradient, stjerner som beveger seg i tre lag, bølgende nordlys i bakgrunnen og fjell i silhuett nederst. Spilleren er en lysende sirkel, nordlys-partiklene er fargede kuler, og iskrystallene er blå roterende sekskanter. Alt er tegnet med geometriske figurer i Pygame, uten bildefiler.
 
 ---
@@ -86,12 +91,12 @@ Spillet fungerte, men det ble litt kjedelig i lengden. Derfor la jeg til flere t
 
 ## 4. Utfordringer og hvordan jeg løste dem
 
-| Utfordring | Løsning |
-| --- | --- |
-| `pygame` kunne ikke installeres på min Python-versjon | Jeg byttet til `pygame-ce` (Community Edition) |
-| **Diagonal bevegelse:** Når jeg holdt inne to piltaster (f.eks. opp og høyre), gikk spilleren mye fortere enn vanlig | Jeg googlet og fant ut at bevegelsen må normaliseres. Jeg fikset det ved å gange farten med 0,7071 når man beveger seg diagonalt |
+| Utfordring                                                                                                                                                                                                 | Løsning                                                                                                                                                    |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pygame` kunne ikke installeres på min Python-versjon                                                                                                                                                      | Jeg byttet til `pygame-ce` (Community Edition)                                                                                                             |
+| **Diagonal bevegelse:** Når jeg holdt inne to piltaster (f.eks. opp og høyre), gikk spilleren mye fortere enn vanlig                                                                                       | Jeg googlet og fant ut at bevegelsen må normaliseres. Jeg fikset det ved å gange farten med 0,7071 når man beveger seg diagonalt                           |
 | **Objekter som ikke forsvant:** Nordlys og is som gikk utenfor skjermen ble hengende i minnet. Da jeg prøvde å fjerne dem fra listen mens jeg gikk gjennom den, kræsjet spillet eller hoppet over objekter | Jeg skjønte at man ikke kan fjerne elementer fra en liste mens man går gjennom den. Jeg løste det ved å gå gjennom en kopi av listen (`for x in liste[:]`) |
-| Koden ble lang og uoversiktlig i én fil | Jeg delte koden i moduler og flyttet innstillinger til `settings.py` |
+| Koden ble lang og uoversiktlig i én fil                                                                                                                                                                    | Jeg delte koden i moduler og flyttet innstillinger til `settings.py`                                                                                       |
 
 ---
 
@@ -109,8 +114,8 @@ Jeg spilte spillet mange ganger selv for å teste.
 
 ## 6. Skjermbilder
 
-| Startmeny | Spillet | Game over |
-| --- | --- | --- |
+| Startmeny                | Spillet                     | Game over                       |
+| ------------------------ | --------------------------- | ------------------------------- |
 | ![Meny](image/image.png) | ![Spill](image/image-1.png) | ![Game over](image/image-2.png) |
 
 ---
@@ -131,23 +136,26 @@ Jeg spilte spillet mange ganger selv for å teste.
 Jeg skrev og testet mesteparten av koden selv, men jeg brukte KI (Microsoft Copilot) som en hjelpelærer når jeg sto fast. Jeg brukte det aldri til å generere hele spillet, men heller til å forstå feilmeldinger og finne riktig tilnærming.
 
 ### Hva brukte jeg KI til?
+
 Feilsøking, forklaring av feilmeldinger og å finne riktig tilnærming til konkrete problemer.
 
 ### Eksempler på spørsmål (prompter)
 
-| Spørsmål jeg stilte | Svaret | Hvordan jeg brukte det |
-| --- | --- | --- |
-| «Hvordan kan jeg sørge for at diagonal bevegelse ikke blir raskere enn vanlig bevegelse i Pygame?» | Jeg måtte gange farten med 0,7071 | Jeg la inn dette i `Player.update()` |
-| «Vanlig pygame feiler under installasjon på den nye Python-versjonen min. Hva er løsningen?» | Bytt til `pygame-ce` | Jeg installerte `pygame-ce` og la det i `requirements.txt` |
-| «Hva er den beste måten å lage en Pause-funksjon i en while-løkke?» | Bruk en `game_state`-variabel i stedet for å stoppe løkken helt | Jeg lagde variabelen `self.state` med verdiene `menu`, `playing`, `paused` og `gameover` |
+| Spørsmål jeg stilte                                                                                | Svaret                                                          | Hvordan jeg brukte det                                                                   |
+| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| «Hvordan kan jeg sørge for at diagonal bevegelse ikke blir raskere enn vanlig bevegelse i Pygame?» | Jeg måtte gange farten med 0,7071                               | Jeg la inn dette i `Player.update()`                                                     |
+| «Vanlig pygame feiler under installasjon på den nye Python-versjonen min. Hva er løsningen?»       | Bytt til `pygame-ce`                                            | Jeg installerte `pygame-ce` og la det i `requirements.txt`                               |
+| «Hva er den beste måten å lage en Pause-funksjon i en while-løkke?»                                | Bruk en `game_state`-variabel i stedet for å stoppe løkken helt | Jeg lagde variabelen `self.state` med verdiene `menu`, `playing`, `paused` og `gameover` |
 
 ### Hvordan vurderte og bearbeidet jeg svarene?
-Jeg leste alltid forklaringene fra KI for å forstå *hvorfor* det fungerte, og testet deretter løsningene i min egen kode. Jeg merket at KI noen ganger foreslo løsninger som ikke passet helt med strukturen min. Da måtte jeg justere det selv.
+
+Jeg leste alltid forklaringene fra KI for å forstå _hvorfor_ det fungerte, og testet deretter løsningene i min egen kode. Jeg merket at KI noen ganger foreslo løsninger som ikke passet helt med strukturen min. Da måtte jeg justere det selv.
 
 ### Hva lærte jeg, og hvilke begrensninger så jeg?
+
 - KI er et veldig bra verktøy for å komme videre når man står fast, spesielt med feilmeldinger.
 - KI kjenner ikke hele prosjektet mitt, så svarene kan ikke limes rett inn. Jeg må forstå koden selv for å tilpasse den.
-- Jeg lærte mer av å forstå *hvorfor* en løsning fungerte enn av selve løsningen.
+- Jeg lærte mer av å forstå _hvorfor_ en løsning fungerte enn av selve løsningen.
 
 ---
 
@@ -160,6 +168,7 @@ Jeg er godt fornøyd med resultatet og følelsen spillet gir. Spillet har en tyd
 Kollisjonene, menyene og pausefunksjonen fungerer som de skal, og rekorden lagres mellom hver gang man spiller. Power-ups, combo og nivåer gjør spillet morsommere over tid. Jeg synes også utseendet ble bra, med nattehimmel, nordlys og effekter. Kodestrukturen med moduler gjør koden lett å lese.
 
 **Hva kunne vært bedre?**
+
 - Hvis jeg skulle gjort dette igjen, ville jeg tegnet mer grafikk selv (f.eks. sprites) i stedet for å bruke geometriske figurer.
 - Slow-motion påvirker bare objekter som dukker opp etter at power-upen er tatt, ikke de som allerede faller.
 - Det er ingen knapp for å skru av lyden.
