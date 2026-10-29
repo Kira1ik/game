@@ -61,7 +61,8 @@ class IceShard:
         return self.y > HEIGHT + self.size
 
     def draw(self, screen):
-       
+        # Iskrystallen er en roterende sekskant med spisse hjørner.
+        points = []
         for i in range(6):
             angle = math.radians(self.rotation + i * 60)
             radius = self.size if i % 2 == 0 else self.size * 0.6
